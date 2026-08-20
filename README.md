@@ -1,12 +1,12 @@
-# MamStocka: Your Stock Manager
+# ManStocka Next
 
-je veux une application de gestion de stock. crée une et laisse-la vide avec le nom: MamStockaV3. Je te donnerai le code que j'ai pour qu'ensemble on continue la construction.
+crée un projet vide et nomme le: ManStockaV2
 
 This project was built with [Lovable](https://lovable.dev).
 
 ## Build with Lovable
 
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/18395c03-e0ba-4f78-bdf1-b6fff6f2e095).
+Continue developing this project in the [Lovable editor](https://lovable.dev/projects/fbedff63-2031-4013-a567-91fc66c59f36).
 
 - **Ship faster**: describe what you want to build and Lovable handles the code.
 - **Stay in sync**: every change made in Lovable is committed straight to this repository.
