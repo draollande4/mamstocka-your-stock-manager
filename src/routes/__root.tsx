@@ -77,14 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "ManStockaV2" },
-      { name: "description", content: "ManStockaV2 — application de gestion de stock." },
-      { name: "author", content: "ManStockaV2" },
-      { property: "og:title", content: "ManStockaV2" },
-      { property: "og:description", content: "ManStockaV2 — application de gestion de stock." },
+      { title: "MamStockaV3" },
+      { name: "description", content: "MamStockaV3 — application de gestion de stock." },
+      { name: "author", content: "MamStockaV3" },
+      { property: "og:title", content: "MamStockaV3" },
+      { property: "og:description", content: "MamStockaV3 — application de gestion de stock." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@ManStockaV2" },
+      { name: "twitter:site", content: "@MamStockaV3" },
     ],
     links: [
       {
