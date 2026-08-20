@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const Route = createFileRoute("/auth")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Connexion — MamStockaV3" },
@@ -36,7 +37,6 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -58,29 +58,6 @@ function AuthPage() {
       return;
     }
     navigate({ to: "/dashboard", replace: true });
-  }
-
-  async function handleSignUp(event: React.FormEvent) {
-    event.preventDefault();
-    setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin,
-        data: { full_name: fullName },
-      },
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    if (data.session) {
-      navigate({ to: "/dashboard", replace: true });
-    } else {
-      toast.success("Compte créé. Vérifiez votre boîte mail pour confirmer.");
-    }
   }
 
   async function handleGoogle() {
