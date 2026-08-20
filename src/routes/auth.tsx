@@ -8,9 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 export const Route = createFileRoute("/auth")({
+  ssr: false,
   head: () => ({
     meta: [
       { title: "Connexion — MamStockaV3" },
@@ -36,7 +35,6 @@ function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
 
   useEffect(() => {
     let active = true;
@@ -58,29 +56,6 @@ function AuthPage() {
       return;
     }
     navigate({ to: "/dashboard", replace: true });
-  }
-
-  async function handleSignUp(event: React.FormEvent) {
-    event.preventDefault();
-    setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: window.location.origin,
-        data: { full_name: fullName },
-      },
-    });
-    setLoading(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    if (data.session) {
-      navigate({ to: "/dashboard", replace: true });
-    } else {
-      toast.success("Compte créé. Vérifiez votre boîte mail pour confirmer.");
-    }
   }
 
   async function handleGoogle() {
@@ -108,17 +83,13 @@ function AuthPage() {
         <Card>
           <CardHeader>
             <CardTitle>Accès à votre espace</CardTitle>
-            <CardDescription>Connectez-vous ou créez un compte pour continuer.</CardDescription>
+            <CardDescription>
+              Utilisez les identifiants fournis par votre administrateur (patron de
+              l'entreprise) ou par le super administrateur.
+            </CardDescription>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="signin">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Connexion</TabsTrigger>
-                <TabsTrigger value="signup">Inscription</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="signin">
-                <form className="space-y-4" onSubmit={handleSignIn}>
+            <form className="space-y-4" onSubmit={handleSignIn}>
                   <div className="space-y-2">
                     <Label htmlFor="signin-email">Email</Label>
                     <Input
@@ -144,49 +115,7 @@ function AuthPage() {
                   <Button type="submit" className="w-full" disabled={loading}>
                     Se connecter
                   </Button>
-                </form>
-              </TabsContent>
-
-              <TabsContent value="signup">
-                <form className="space-y-4" onSubmit={handleSignUp}>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-name">Nom complet</Label>
-                    <Input
-                      id="signup-name"
-                      required
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
-                    <Input
-                      id="signup-email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="signup-password">Mot de passe</Label>
-                    <Input
-                      id="signup-password"
-                      type="password"
-                      autoComplete="new-password"
-                      required
-                      minLength={6}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                    />
-                  </div>
-                  <Button type="submit" className="w-full" disabled={loading}>
-                    Créer mon compte
-                  </Button>
-                </form>
-              </TabsContent>
-            </Tabs>
+            </form>
 
             <div className="my-5 flex items-center gap-3">
               <span className="h-px flex-1 bg-border" />
@@ -197,6 +126,9 @@ function AuthPage() {
             <Button variant="outline" className="w-full" onClick={handleGoogle} disabled={loading}>
               Continuer avec Google
             </Button>
+            <p className="mt-4 text-center text-xs text-muted-foreground">
+              Pas encore de compte ? Contactez l'administrateur de votre entreprise.
+            </p>
           </CardContent>
         </Card>
       </div>
